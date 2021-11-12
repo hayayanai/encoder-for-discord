@@ -124,7 +124,7 @@ jobs:
         #   tar -C Encoder_for_Discord-linux -pczvf Encoder_for_Discord-linux.tar.gz Encoder_for_Discord
         #   zip --junk-paths Encoder_for_Discord-windows ./Encoder_for_Discord-windows/Encoder_for_Discord.exe
         run: |
-          tar -C Encoder_for_Discord-linux -pczvf Encoder_for_Discord-${{ steps.tag.outputs.version }}-linux.tar.gz Encoder_for_Discord
+          tar -C Encoder_for_Discord-linux -pczvf Encoder_for_Discord-${{ steps.tag.outputs.version }}-linux.tar.gz encoder_for_discord
           zip --junk-paths Encoder_for_Discord-${{ steps.tag.outputs.version }}-windows ./Encoder_for_Discord-windows/Encoder_for_Discord.exe
         # run: zip --junk-paths Encoder_for_Discord-windows ./Encoder_for_Discord-windows/Encoder_for_Discord.exe
       # - name: Append Binary
