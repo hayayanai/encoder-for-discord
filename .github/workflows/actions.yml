@@ -3,7 +3,7 @@ name: build executables
 on:
   push:
     tags:
-      - "v*"
+      - 'v*'
 
 jobs:
   windows-build:
@@ -22,7 +22,6 @@ jobs:
       - name: Install requirements
         # run: pip install -r requirements.txt
         run: pip install PyInstaller
-
 
       - name: build
         run: pyinstaller encoder_for_discord.py --onefile
@@ -92,7 +91,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-
       - name: Set version
         id: tag
         run: echo "::set-output name=version::$(echo ${{ github.ref }} | sed -e 's/^refs\/tags\///')"
@@ -129,8 +127,8 @@ jobs:
         #   tar -C Encoder_for_Discord-linux -pczvf Encoder_for_Discord-linux.tar.gz Encoder_for_Discord
         #   zip --junk-paths Encoder_for_Discord-windows ./Encoder_for_Discord-windows/Encoder_for_Discord.exe
         run: |
-          tar -C Encoder_for_Discord-linux -pczvf Encoder_for_Discord-${{ steps.tag.outputs.version }}-linux.tar.gz encoder_for_discord
-          zip --junk-paths Encoder_for_Discord-${{ steps.tag.outputs.version }}-windows ./Encoder_for_Discord-windows/Encoder_for_Discord.exe
+          tar -C Encoder_for_Discord-linux -pczvf Encoder_for_Discord-linux.tar.gz encoder_for_discord
+          zip --junk-paths Encoder_for_Discord-windows ./Encoder_for_Discord-windows/Encoder_for_Discord.exe
         # run: zip --junk-paths Encoder_for_Discord-windows ./Encoder_for_Discord-windows/Encoder_for_Discord.exe
       # - name: Append Binary
       #   uses: actions/upload-release-asset@v1
@@ -148,7 +146,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./Encoder_for_Discord-${{ steps.tag.outputs.version }}-linux.tar.gz
+          asset_path: ./Encoder_for_Discord-linux.tar.gz
           asset_name: Encoder_for_Discord-${{ steps.tag.outputs.version }}-linux.tar.gz
           asset_content_type: application/gzip
 
@@ -158,6 +156,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./Encoder_for_Discord-${{ steps.tag.outputs.version }}-windows.zip
+          asset_path: ./Encoder_for_Discord-windows.zip
           asset_name: Encoder_for_Discord-${{ steps.tag.outputs.version }}-windows.zip
           asset_content_type: application/zip
