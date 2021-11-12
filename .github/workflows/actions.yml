@@ -95,11 +95,7 @@ jobs:
 
       - name: Set version
         id: version
-        run: |
-          REPOSITORY=$(echo ${{ github.repository }} | sed -e "s#.*/##")
-          VERSION=$(echo ${{ github.ref }} | sed -e "s#refs/tags/##g")
-          echo ::set-output name=version::$VERSION
-          echo ::set-output name=filename::$REPOSITORY-$VERSION
+        run: echo "::set-output name=version::$(echo ${{ github.ref }} | sed -e 's/^refs\/tags\///')"
 
       - name: Download Linux
         uses: actions/download-artifact@v1

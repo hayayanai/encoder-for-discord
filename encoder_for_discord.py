@@ -31,7 +31,7 @@ def get_video_length(file):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Discord用に動画をエンコードする。")
-    parser.add_argument("input_file", help="変換するファイル")
+    parser.add_argument("-i", "--input_file", help="変換するファイル")
     parser.add_argument("-o", "--output_file",
                         help="出力ファイル名", default="output.mp4")
     parser.add_argument(
@@ -41,13 +41,16 @@ if __name__ == "__main__":
                         help="音声ビットレート(kbps)", default=64, type=float)
     parser.add_argument("-sl", "--size_limit", help="容量制限(MB)", default=8, type=float)
     args = parser.parse_args()
-    input_file = args.input_file.replace("\\", "/")
-    encode(pathlib.Path(input_file), pathlib.Path(args.output_file),
-           args.vcodec, args.audio_bitrate)
+    input_file = ""
+    try:
+        input_file = args.input_file.replace("\\", "/")
+    except:
+        i = input("動画ファイルのパスを入力: ")
+        input_file = i.replace("\\", "/")
+    finally:
+        encode(pathlib.Path(input_file), pathlib.Path(args.output_file), args.vcodec, args.audio_bitrate)
 
-# usage: Encode_for_Discord.py [-h] [-o OUTPUT_FILE] [-c:v VCODEC]
-#                              [-b:a AUDIO_BITRATE]
-#                              input_file
+# usage: encoder_for_discord.py [-h] [-o OUTPUT_FILE] [-c:v VCODEC] [-b:a AUDIO_BITRATE] [-sl SIZE_LIMIT] input_file
 
 # Discord用に動画をエンコードする。
 
@@ -62,3 +65,5 @@ if __name__ == "__main__":
 #                         映像エンコーダ
 #   -b:a AUDIO_BITRATE, --audio_bitrate AUDIO_BITRATE
 #                         音声ビットレート(kbps)
+#   -sl SIZE_LIMIT, --size_limit SIZE_LIMIT
+#                         容量制限(MB)
