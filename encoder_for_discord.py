@@ -29,17 +29,40 @@ def get_video_length(file):
             return float(line[9:])
 
 
+def check_gpu_nvidia(device: int) -> bool:
+    """
+    NVIDIAのGPUデバイスが使用可能か確認する
+    Args:
+        device: デバイス番号
+    """
+    output = subprocess.check_output(["nvidia-smi", "-L"])
+    lines = output.decode().split('\n')
+    for line in lines:
+        if line == "":
+            continue
+        gpu_device_id = line.split(":")[0]
+        if gpu_device_id == f"GPU {device}":
+            return True
+    return False
+
+
 if __name__ == "__main__":
+
+    default_vcode = "libx264"
+    if check_gpu_nvidia(0):
+        default_vcodec = "h264_nvenc"
+
     parser = argparse.ArgumentParser(description="Discord用に動画をエンコードする。")
     parser.add_argument("-i", "--input_file", help="変換するファイル")
     parser.add_argument("-o", "--output_file",
                         help="出力ファイル名", default="output.mp4")
     parser.add_argument(
-        "-c:v", "--vcodec", help="映像エンコーダ", default="libx264"
+        "-c:v", "--vcodec", help="映像エンコーダ", default=default_vcodec
     )
     parser.add_argument("-b:a", "--audio_bitrate",
                         help="音声ビットレート(kbps)", default=64, type=float)
-    parser.add_argument("-sl", "--size_limit", help="容量制限(MB)", default=8, type=float)
+    parser.add_argument("-sl", "--size_limit",
+                        help="容量制限(MB)", default=8, type=float)
     args = parser.parse_args()
     input_file = ""
     try:
@@ -48,7 +71,8 @@ if __name__ == "__main__":
         i = input("動画ファイルのパスを入力: ")
         input_file = i.replace("\\", "/")
     finally:
-        encode(pathlib.Path(input_file), pathlib.Path(args.output_file), args.vcodec, args.audio_bitrate)
+        encode(pathlib.Path(input_file), pathlib.Path(
+            args.output_file), args.vcodec, args.audio_bitrate)
 
 # usage: encoder_for_discord.py [-h] [-o OUTPUT_FILE] [-c:v VCODEC] [-b:a AUDIO_BITRATE] [-sl SIZE_LIMIT] input_file
 

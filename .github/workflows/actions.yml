@@ -94,7 +94,7 @@ jobs:
     steps:
 
       - name: Set version
-        id: version
+        id: tag
         run: echo "::set-output name=version::$(echo ${{ github.ref }} | sed -e 's/^refs\/tags\///')"
 
       - name: Download Linux
