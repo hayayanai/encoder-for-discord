@@ -83,7 +83,7 @@ jobs:
         uses: actions/upload-artifact@v1
         with:
           name: Encoder_for_Discord-linux
-          path: dist/Encoder_for_Discord
+          path: dist/encoder_for_discord
 
   release:
     # needs: [ubuntu-build, macOS-build, windows-build]
