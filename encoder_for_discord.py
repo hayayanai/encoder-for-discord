@@ -3,7 +3,7 @@ import argparse
 import math
 import pathlib
 
-ffmpeg_dir = "ffmpeg.exe"
+ffmpeg_dir = "ffmpeg"
 size_limit = 8  # MB
 
 
@@ -22,7 +22,7 @@ def encode(input_file, output_file="output.mp4", vcodec="libx264", audio_bitrate
 
 def get_video_length(file):
     result = subprocess.run(
-        ["ffprobe.exe", file, "-hide_banner", "-show_entries", "format=duration"], stdout=subprocess.PIPE, stderr=subprocess.STDOUT, universal_newlines=True)
+        ["ffprobe", file, "-hide_banner", "-show_entries", "format=duration"], stdout=subprocess.PIPE, stderr=subprocess.STDOUT, universal_newlines=True)
     lines = result.stdout.split("\n")
     for line in lines:
         if "duration=" in line:

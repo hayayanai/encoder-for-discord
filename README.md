@@ -1,5 +1,7 @@
 # encoder-for-discord
 
+- ffmpegの環境変数を通すか、ffmpegと同じディレクトリで実行してください。
+
 ```
 usage: Encode_for_Discord.py [-h] [-o OUTPUT_FILE] [-c:v VCODEC]
                              [-b:a AUDIO_BITRATE]
