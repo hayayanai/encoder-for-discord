@@ -4,7 +4,7 @@ import math
 import pathlib
 
 ffmpeg_dir = "ffmpeg"
-size_limit = 8  # MB
+size_limit = 25  # MB
 
 
 def encode(input_file, output_file="output.mp4", vcodec="libx264", audio_bitrate=64):
